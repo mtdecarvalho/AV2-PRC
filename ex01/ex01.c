@@ -112,7 +112,7 @@ void leragenda (char nomearq[], Tcontatos * a)
         {
             lerAte(arq, ',' , b.nome, TAMNOME );
             lerAte(arq, ',', b.email, TAMEMAIL);
-            lerAte(arq, '\0', b.telefone, TAMTEL);
+            lerAte(arq, '\n', b.telefone, TAMTEL);
             inserircontato(b, &*a);
         }
     }
