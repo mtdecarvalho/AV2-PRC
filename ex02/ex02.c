@@ -63,10 +63,28 @@ int obterindiceestoque ( Testoque a, int codigo )
     return achou == 1 ? i : -1;
 }
 
+void lerint ( int * a )
+{
+    while ( scanf(" %d", &(*a) ) != 1 )
+    {
+        printf("Valor invalido. Tente novamente: ");
+        limpa();
+    }
+}
+
+void lerdouble ( double * a )
+{
+    while ( scanf(" %lf", &(*a) ) != 1 )
+    {
+        printf("Valor invalido. Tente novamente: ");
+        limpa();
+    }
+}
+
 void lerbrinquedo ( Tbrinquedo * a, Testoque * b )
 {
     int posicao = (*b).qtd, i, fim=0;
-    printf("Insira o codigo do brinquedo: "); scanf(" %d", &(*a).codigo);
+    printf("Insira o codigo do brinquedo: "); lerint( &(*a).codigo );
     for (i = 0 ; i < posicao ; i++ )
     {
         if ( (*b).v[i].codigo == (*a).codigo ) // ja existe no estoque
@@ -84,8 +102,8 @@ void lerbrinquedo ( Tbrinquedo * a, Testoque * b )
         if ( (*a).categoria[strlen((*a).categoria)-1] == '\n' ) { (*a).categoria[strlen((*a).categoria)-1] = '\0'; }
         printf("Insira o nome do brinquedo: "); fgets((*a).nome, TAMNOME, stdin);
         if ( (*a).nome[strlen((*a).nome)-1] == '\n' ) { (*a).nome[strlen((*a).nome)-1] = '\0'; }
-        printf("Insira o preco do brinquedo: "); scanf(" %lf", &(*a).preco);
-        printf("Insira a quantidade: "); scanf(" %d", &(*a).qtd);
+        printf("Insira o preco do brinquedo: "); lerdouble( &(*a).preco );
+        printf("Insira a quantidade: "); lerint( &(*a).qtd );
         printf("Brinquedo lido com sucesso.\n"); pausartela();
     }
 }
@@ -100,7 +118,8 @@ void inserirbrinquedo ( Tbrinquedo a, Testoque * b )
 void removerbrinquedo ( Testoque * a )
 {
     int codigo, posicao, qtd;
-    printf("Insira o codigo do brinquedo e a quantidade a ser removida [0 = Remover registro]: "); scanf(" %d %d", &codigo, &qtd);
+    printf("Insira o codigo do brinquedo e a quantidade a ser removida [0 = Remover registro]: "); lerint(&codigo); lerint(&qtd);
+    //scanf(" %d %d", &codigo, &qtd);
     posicao = obterindiceestoque(*a, codigo);
     if ( posicao > -1 )
     {
@@ -137,18 +156,26 @@ void atualizarbrinquedo ( Testoque * a )
     {
         printf("Que dado deseja alterar no brinquedo %s?\n", (*a).v[posicao].nome);
         printf(
-            "1. Categoria\n"
-            "2. Nome\n");
+            "1. Codigo\n"
+            "2. Categoria\n"
+            "3. Nome\n"
+            "4. Preco\n"
+            "5. Quantidade\n");
         scanf(" %d", &op); limpa();
         switch (op)
         {
-            case 1: printf("Insira a nova categoria para o brinquedo: "); fgets( (*a).v[posicao].categoria, TAMCATEGORIA, stdin );
+            case 1: printf("Insira o novo codigo para o brinquedo: "); lerint( &(*a).v[posicao].codigo ); 
+                    printf("Codigo atualizado com sucesso!\n"); break;
+            case 2: printf("Insira a nova categoria para o brinquedo: "); fgets( (*a).v[posicao].categoria, TAMCATEGORIA, stdin );
                     if ( (*a).v[posicao].categoria[strlen((*a).v[posicao].categoria)-1] == '\n' ) { (*a).v[posicao].categoria[strlen( (*a).v[posicao].categoria)-1] = '\0'; }
                     printf("Categoria atualizada com sucesso!\n"); break;
-            case 2: printf("Insira o novo nome para o brinquedo: "); fgets( (*a).v[posicao].nome, TAMNOME, stdin );
+            case 3: printf("Insira o novo nome para o brinquedo: "); fgets( (*a).v[posicao].nome, TAMNOME, stdin );
                     if ( (*a).v[posicao].nome[strlen((*a).v[posicao].nome)-1] == '\n' ) { (*a).v[posicao].nome[strlen( (*a).v[posicao].nome)-1] = '\0'; }
                     printf("Nome atualizado com sucesso!\n"); break;
-            // quais dados alterar mais?
+            case 4: printf("Insira o novo preco para o brinquedo: "); lerdouble( &(*a).v[posicao].preco );
+                    printf("Preco atualizado com sucesso!\n"); break;
+            case 5: printf("Insira a nova quantidade para o brinquedo: "); lerint( &(*a).v[posicao].qtd );
+                    printf("Quantidade atualizada com sucesso!\n"); break;
         }
     }
     else
@@ -195,7 +222,7 @@ void listarfiltro ( Testoque a )
     printf("Deseja filtrar usando:\n"
         "1. Nome\n"
         "2. Categoria\n\n");
-    scanf(" %d", &op); limpa();
+    lerint( &op ); limpa();
     switch (op) 
     {
         case 1: 
@@ -240,7 +267,7 @@ int menu ()
            "5. Listar todos de uma categoria\n"
            "6. Listar filtrando por parte do nome ou categoria\n"
            "0. Sair\n");
-    scanf(" %d", &op);
+    lerint( &op );
     return op;
 }
 

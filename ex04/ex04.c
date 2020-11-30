@@ -1,6 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct
+{
+    double v[100];
+    int qtd;
+} Tconjunto;
+
+typedef struct
+{
+    double v[200];
+    int qtd;
+} Tuniao;
+
 void limpartela()
 {
     #ifdef __unix__
@@ -28,17 +40,38 @@ void limpa()
     while ((getchar()) != '\n');
 }
 
-typedef struct
+void lerdouble ( double * a )
 {
-    double v[100];
-    int qtd;
-} Tconjunto;
+    while ( scanf(" %lf", &(*a) ) != 1 )
+    {
+        printf("O elemento inserido eh invalido. Tente novamente.\n");
+        limpa();
+    }
+}
 
-typedef struct
+void imprimirconjunto ( Tconjunto X )
 {
-    double v[200];
-    int qtd;
-} Tuniao;
+    int i, cont=0;
+    for ( i = 0 ; i < X.qtd ; i++ )
+    {
+        if ( X.v[i] != 0 )
+            printf("%lf\n", X.v[i]);
+        else cont++;
+    }
+    if ( cont == X.qtd ) printf("N/A\n");
+}
+
+void imprimiruniao ( Tuniao X )
+{
+    int i, cont=0;
+    for ( i = 0 ; i < X.qtd ; i++ )
+    {
+        if ( X.v[i] != 0 )
+            printf("%lf\n", X.v[i]);
+        else cont++;
+    }
+    if ( cont == X.qtd ) printf("N/A\n");
+}
 
 void inicializarconjunto ( Tconjunto * X )
 {
@@ -60,16 +93,15 @@ void lerconjunto ( Tconjunto * X )
     double valor = 1;
     for ( i = 0 ; i < 100 && valor != 0 ; i++ )
     {
-        scanf(" %lf", &valor);
+        lerdouble(&valor);
         while ( validarconjunto( *X, valor ) == 0 )
         {
-            printf("O elemento inserido eh repetido. Tente novamente.\n"); limpa(); scanf(" %lf", &valor);
+            printf("O elemento inserido eh repetido ou invalido. Tente novamente.\n"); limpa(); scanf(" %lf", &valor);
         }
         if ( validarconjunto( *X, valor ) == 1 ) { (*X).v[i] = valor; (*X).qtd++; }
         else if ( validarconjunto( *X, valor ) == 2 ) break;
     }
 }
-
 
 void uniao ( Tconjunto A, Tconjunto B )
 {
@@ -84,10 +116,7 @@ void uniao ( Tconjunto A, Tconjunto B )
     {
         AUB.v[k] = B.v[i]; AUB.qtd++;
     }
-    for ( i = 0 ; i < AUB.qtd ; i++ )
-    {
-        printf("%lf\n", AUB.v[i]);
-    }
+    imprimiruniao(AUB);
 }
 
 void intersecao ( Tconjunto A, Tconjunto B )
@@ -99,8 +128,7 @@ void intersecao ( Tconjunto A, Tconjunto B )
         for ( k = 0 ; k < B.qtd ; k++)
             if ( A.v[i] == B.v[k] )
             {    AeB.v[j] = A.v[i]; AeB.qtd++; j++;  }
-    for ( i = 0 ; i < AeB.qtd ; i++ )
-        printf("%lf\n", AeB.v[i]);
+    imprimirconjunto(AeB);
 }
 
 void diferenca ( Tconjunto A, Tconjunto B )
@@ -108,18 +136,19 @@ void diferenca ( Tconjunto A, Tconjunto B )
     Tconjunto AdifB;
     int i, k, j;
     AdifB.qtd=0;
-    for ( i = 0 ; i < A.qtd ; i++ ) { AdifB.v[i] = A.v[i]; AdifB.qtd++; } 
+    AdifB = A;
     for ( i = 0 ; i < AdifB.qtd ; i++ )
         for ( k = 0 ; k < B.qtd ; k++ )
             if ( AdifB.v[i] == B.v[k] )
-            {
-                for ( j = i ; j < AdifB.qtd-1 ; j++ )
-                    AdifB.v[j] = AdifB.v[j+1];
-                AdifB.qtd--;
-            }
-    if ( AdifB.qtd == 0 ) AdifB.v[0] = 0;
+                AdifB.v[i] = 0;
     for ( i = 0 ; i < AdifB.qtd ; i++ )
-        printf("%lf\n", AdifB.v[i]);
+        if ( AdifB.v[i] == 0 )
+        {
+            AdifB.v[i] = AdifB.v[AdifB.qtd-1];
+            AdifB.qtd--;
+        }
+    if ( AdifB.qtd == 0 ) AdifB.v[0] = 0;
+    imprimirconjunto(AdifB);
 }
 
 int main ()
