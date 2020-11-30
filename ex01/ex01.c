@@ -44,6 +44,20 @@ typedef struct
     int qtd;
 } Tcontatos;
 
+char *lerAte(FILE *arq, char sep, char strdest[], int max)
+{
+    int i=0;
+    int letra;
+    while ( (letra = fgetc(arq)) > 0 && letra!=sep && i<max-1)
+    {
+        strdest[i] = letra;
+        i++;
+    }
+    strdest[i] = '\0'; //terminador da string
+    return strdest;
+}
+
+
 void inicializarcontatos (Tcontatos * a)
 {
     (*a).qtd = 0;
@@ -84,6 +98,40 @@ void inserircontato (Tcontato a, Tcontatos * b)
 {
     (*b).v[(*b).qtd] = a;
     (*b).qtd++;
+}
+
+void leragenda (char nomearq[], Tcontatos * a)
+{
+    FILE *arq;
+    arq = fopen(nomearq, "rt");
+    if (arq!=NULL)
+    {
+        (*a).qtd = 0;
+        Tcontato b;
+        while ( !feof(arq) )
+        {
+            lerAte(arq, ',' , b.nome, TAMNOME );
+            lerAte(arq, ',', b.email, TAMEMAIL);
+            lerAte(arq, '\0', b.telefone, TAMTEL);
+            inserircontato(b, &*a);
+        }
+    }
+}
+
+void gravaragenda (char nomearq[], Tcontatos a)
+{
+    FILE *arq; 
+    arq = fopen(nomearq, "wt");
+    if ( arq!= NULL )
+    {
+        int i; 
+        for ( i = 0 ; i < a.qtd ; i++ )
+        {
+            Tcontato b = a.v[i];
+            fprintf(arq, "%s,%s,%s\n", b.nome, b.email, b.telefone);
+        }
+        fclose(arq);
+    }
 }
 
 void listarcontato (Tcontatos a)
@@ -190,6 +238,8 @@ int menu()
             "\t2. Remover contato\n"
             "\t3. Listar todos os contatos\n"
             "\t4. Filtrar contato por algum dado\n"
+            "\t5. Gravar agenda em arquivo\n"
+            "\t6. Inserir contato via arquivo\n"
             "\t0. Sair\n");
         lerint(&op);
         return op;
@@ -199,6 +249,7 @@ int main ()
 {
     Tcontato contato;
     Tcontatos contatos;
+    char nomearq[100];
     int fim = 0;
     inicializarcontatos(&contatos);
 
@@ -210,6 +261,12 @@ int main ()
             case 2: limpa(); removercontato (&contatos); break;
             case 3: limpa(); listarcontatos(contatos); pausartela();  break;
             case 4: limpa(); listarcontato(contatos); pausartela(); break;
+            case 5: limpa(); printf("Insira um nome para o arquivo: "); fgets(nomearq, 100, stdin);
+            if (nomearq[strlen(nomearq)-1] == '\n') nomearq[strlen(nomearq)-1] = '\0';
+            gravaragenda(nomearq, contatos); break;
+            case 6: limpa(); printf("Insira o nome do arquivo a ser lido: "); fgets(nomearq, 100, stdin);
+            if (nomearq[strlen(nomearq)-1] == '\n') nomearq[strlen(nomearq)-1] = '\0';
+            leragenda(nomearq, &contatos); break;
             case 0: printf("Encerrando...\n"); fim=1; break;
         }
     }
