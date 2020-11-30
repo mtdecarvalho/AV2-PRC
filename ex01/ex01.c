@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define TAMEMAIL 50
@@ -86,11 +87,17 @@ void lerint ( int * a )
     }
 }
 
+void lerstring ( char a[], int tam )
+{
+    fgets(a, tam, stdin); 
+    if (a[strlen(a)-1] == '\n') a[strlen(a)-1] = '\0';
+}
+
 void lercontato (Tcontato * a)
 {
-    printf("Insira o nome do contato: "); fgets( (*a).nome, TAMNOME, stdin ); if ((*a).nome[strlen((*a).nome)-1] == '\n') (*a).nome[strlen((*a).nome)-1] = '\0';
-    printf("Insira o email do contato: "); fgets( (*a).email, TAMEMAIL , stdin ); if ((*a).email[strlen((*a).email)-1] == '\n') (*a).email[strlen((*a).email)-1] = '\0';
-    printf("Insira o numero de telefone do contato: "); fgets( (*a).telefone, TAMTEL, stdin ); if ((*a).telefone[strlen((*a).telefone)-1] == '\n') (*a).telefone[strlen((*a).telefone)-1] = '\0';
+    printf("Insira o nome do contato: "); lerstring( (*a).nome, TAMNOME );
+    printf("Insira o email do contato: "); lerstring( (*a).email, TAMEMAIL );
+    printf("Insira o numero de telefone do contato: "); lerstring( (*a).telefone, TAMTEL );
     printf("Contato lido com sucesso!\n"); pausartela();
 }
 
@@ -148,8 +155,7 @@ void listarcontato (Tcontatos a)
     switch (op)
     {
         case 1:
-            printf("Insira parte do nome: "); fgets(dado, TAMEMAIL, stdin);
-            if ( dado[strlen(dado)-1] == '\n') dado[strlen(dado)-1] = '\0';
+            printf("Insira parte do nome: "); lerstring( dado, TAMNOME );
             for ( i = 0 ; i < a.qtd ; i++ ) 
             {
                 pont = strstr( a.v[i].nome, dado ); 
@@ -162,8 +168,7 @@ void listarcontato (Tcontatos a)
             }
             break;
         case 2:
-            printf("Insira parte do email: "); fgets(dado, TAMEMAIL, stdin);
-            if ( dado[strlen(dado)-1] == '\n') dado[strlen(dado)-1] = '\0';
+            printf("Insira parte do email: "); lerstring( dado, TAMEMAIL );
             for ( i = 0 ; i < a.qtd ; i++ ) 
             {
                 pont = strstr( a.v[i].email, dado ); 
@@ -176,8 +181,7 @@ void listarcontato (Tcontatos a)
             }
             break;
         case 3:
-            printf("Insira parte do telefone: "); fgets(dado, TAMEMAIL, stdin);
-            if ( dado[strlen(dado)-1] == '\n') dado[strlen(dado)-1] = '\0';
+            printf("Insira parte do telefone: "); lerstring( dado, TAMEMAIL );
             for ( i = 0 ; i < a.qtd ; i++ ) 
             {
                 pont = strstr( a.v[i].telefone, dado ); 
@@ -212,7 +216,7 @@ void removercontato (Tcontatos * a)
     int pos;
     char email[TAMEMAIL];
     printf("Insira o email do contato a ser removido: ");
-    fgets(email, TAMEMAIL, stdin); if ( email[strlen(email)-1] == '\n') email[strlen(email)-1] = '\0';
+    lerstring(email, TAMEMAIL );
     pos = obterindiceemail(*a, email);
     if ( pos > -1 )
     {
@@ -235,11 +239,11 @@ int menu()
 
         printf("\tAGENDA ELETRONICA\n"
             "\t1. Inserir contato\n"
-            "\t2. Remover contato\n"
-            "\t3. Listar todos os contatos\n"
-            "\t4. Filtrar contato por algum dado\n"
-            "\t5. Gravar agenda em arquivo\n"
-            "\t6. Inserir contato via arquivo\n"
+            "\t2. Inserir contato via arquivo\n"
+            "\t3. Remover contato\n"
+            "\t4. Listar todos os contatos\n"
+            "\t5. Filtrar contatos\n"
+            "\t6. Gravar agenda em arquivo\n"
             "\t0. Sair\n");
         lerint(&op);
         return op;
@@ -255,18 +259,18 @@ int main ()
 
     do
     {
-        switch (menu())
+        switch ( menu() )
         {
             case 1: limpa(); lercontato(&contato); inserircontato(contato, &contatos); break;
-            case 2: limpa(); removercontato (&contatos); break;
-            case 3: limpa(); listarcontatos(contatos); pausartela();  break;
-            case 4: limpa(); listarcontato(contatos); pausartela(); break;
-            case 5: limpa(); printf("Insira um nome para o arquivo: "); fgets(nomearq, 100, stdin);
-            if (nomearq[strlen(nomearq)-1] == '\n') nomearq[strlen(nomearq)-1] = '\0';
-            gravaragenda(nomearq, contatos); break;
-            case 6: limpa(); printf("Insira o nome do arquivo a ser lido: "); fgets(nomearq, 100, stdin);
+            case 2: limpa(); printf("Insira o nome do arquivo a ser lido: "); lerstring(nomearq, 100 );
             if (nomearq[strlen(nomearq)-1] == '\n') nomearq[strlen(nomearq)-1] = '\0';
             leragenda(nomearq, &contatos); break;
+            case 3: limpa(); removercontato (&contatos); break;
+            case 4: limpa(); listarcontatos(contatos); pausartela();  break;
+            case 5: limpa(); listarcontato(contatos); pausartela(); break;
+            case 6: limpa(); printf("Insira um nome para o arquivo: "); lerstring( nomearq, 100 );
+            if (nomearq[strlen(nomearq)-1] == '\n') nomearq[strlen(nomearq)-1] = '\0';
+            gravaragenda(nomearq, contatos); break;
             case 0: printf("Encerrando...\n"); fim=1; break;
         }
     }

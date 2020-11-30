@@ -81,6 +81,12 @@ void lerdouble ( double * a )
     }
 }
 
+void lerstring ( char a[], int tam )
+{
+    fgets(a, tam, stdin);
+    if ( a[strlen(a)-1] == '\n' ) a[strlen(a)-1] = '\0';
+}
+
 void lerbrinquedo ( Tbrinquedo * a, Testoque * b )
 {
     int posicao = (*b).qtd, i, fim=0;
@@ -98,10 +104,8 @@ void lerbrinquedo ( Tbrinquedo * a, Testoque * b )
     } 
     if ( fim == 0 )
     {
-        printf("Insira a categoria do brinquedo: "); limpa(); fgets((*a).categoria, TAMCATEGORIA, stdin);
-        if ( (*a).categoria[strlen((*a).categoria)-1] == '\n' ) { (*a).categoria[strlen((*a).categoria)-1] = '\0'; }
-        printf("Insira o nome do brinquedo: "); fgets((*a).nome, TAMNOME, stdin);
-        if ( (*a).nome[strlen((*a).nome)-1] == '\n' ) { (*a).nome[strlen((*a).nome)-1] = '\0'; }
+        printf("Insira a categoria do brinquedo: "); limpa(); lerstring( (*a).categoria, TAMCATEGORIA );
+        printf("Insira o nome do brinquedo: "); lerstring( (*a).nome, TAMNOME );
         printf("Insira o preco do brinquedo: "); lerdouble( &(*a).preco );
         printf("Insira a quantidade: "); lerint( &(*a).qtd );
         printf("Brinquedo lido com sucesso.\n"); pausartela();
@@ -166,11 +170,9 @@ void atualizarbrinquedo ( Testoque * a )
         {
             case 1: printf("Insira o novo codigo para o brinquedo: "); lerint( &(*a).v[posicao].codigo ); 
                     printf("Codigo atualizado com sucesso!\n"); break;
-            case 2: printf("Insira a nova categoria para o brinquedo: "); fgets( (*a).v[posicao].categoria, TAMCATEGORIA, stdin );
-                    if ( (*a).v[posicao].categoria[strlen((*a).v[posicao].categoria)-1] == '\n' ) { (*a).v[posicao].categoria[strlen( (*a).v[posicao].categoria)-1] = '\0'; }
+            case 2: printf("Insira a nova categoria para o brinquedo: "); lerstring( (*a).v[posicao].categoria, TAMCATEGORIA );
                     printf("Categoria atualizada com sucesso!\n"); break;
-            case 3: printf("Insira o novo nome para o brinquedo: "); fgets( (*a).v[posicao].nome, TAMNOME, stdin );
-                    if ( (*a).v[posicao].nome[strlen((*a).v[posicao].nome)-1] == '\n' ) { (*a).v[posicao].nome[strlen( (*a).v[posicao].nome)-1] = '\0'; }
+            case 3: printf("Insira o novo nome para o brinquedo: "); lerstring( (*a).v[posicao].nome, TAMNOME );
                     printf("Nome atualizado com sucesso!\n"); break;
             case 4: printf("Insira o novo preco para o brinquedo: "); lerdouble( &(*a).v[posicao].preco );
                     printf("Preco atualizado com sucesso!\n"); break;
@@ -203,7 +205,7 @@ void listarcategoria ( Testoque a )
     int i;
     limpa();
     printf("Insira a categoria a ser listada: "); 
-    fgets( categoria, TAMCATEGORIA, stdin ); if ( categoria[strlen(categoria)-1] == '\n' ) categoria[strlen(categoria)-1] = '\0';
+    lerstring( categoria, TAMCATEGORIA );
     for ( i = 0 ; i < a.qtd ; i++ )
         if ( strcmp(categoria, a.v[i].categoria) == 0 )
             printf(
@@ -226,7 +228,7 @@ void listarfiltro ( Testoque a )
     switch (op) 
     {
         case 1: 
-            printf("Insira o nome a ser buscado: "); fgets(dado, TAMCATEGORIA, stdin); if ( dado[strlen(dado)-1] == '\n' ) dado[strlen(dado)-1] = '\0';
+            printf("Insira o nome a ser buscado: "); lerstring( dado, TAMCATEGORIA );
             for ( i = 0 ; i < a.qtd ; i++ )
             {
                 pont = strstr( a.v[i].nome, dado ); 
@@ -240,7 +242,7 @@ void listarfiltro ( Testoque a )
             pausartela();
             break;
         case 2: 
-            printf("Insira a categoria a ser buscada: "); fgets(dado, TAMCATEGORIA, stdin); if ( dado[strlen(dado)-1] == '\n' ) dado[strlen(dado)-1] = '\0';
+            printf("Insira a categoria a ser buscada: "); lerstring(dado, TAMCATEGORIA );
             for ( i = 0 ; i < a.qtd ; i++ )
             {
                 pont = strstr( a.v[i].categoria, dado ); 
