@@ -32,7 +32,7 @@ void limpa()
 
 void lerint ( int * linha, int * col)
 {
-    while ( scanf("%d %d",&*linha, &*col) != 2 )
+    while ( scanf(" %d %d",&*linha, &*col) != 2 )
     {
         printf("Valores invalidos.\n"); limpa();
     }
