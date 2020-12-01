@@ -1,5 +1,5 @@
 #include "contatos.h"
-#include "uteis.h"
+#include "util.h"
 #include "menu.h"
 #include "arqtxt.h"
 

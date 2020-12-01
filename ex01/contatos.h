@@ -1,6 +1,8 @@
 #ifndef _CONTATOS_H_
 #define _CONTATOS_H_
 
+#include "util.h"
+
 #define TAMEMAIL 50
 #define TAMTEL 10
 #define TAMNOME 30

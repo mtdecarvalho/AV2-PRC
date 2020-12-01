@@ -1,7 +1,7 @@
 #ifndef _MENU_H_
 #define _MENU_H_
 
-#include "uteis.h"
+#include "util.h"
 
 #include <stdio.h>
 
