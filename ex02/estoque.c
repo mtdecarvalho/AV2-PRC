@@ -30,6 +30,7 @@ int obterindiceestoque ( Testoque a, int codigo )
 void lerbrinquedo ( Tbrinquedo * a, Testoque * b )
 {
     int posicao = (*b).qtd, i, fim=0;
+    limpartela();
     printf("Insira o codigo do brinquedo: "); lerint( &(*a).codigo );
     for (i = 0 ; i < posicao ; i++ )
     {
@@ -62,6 +63,7 @@ void inserirbrinquedo ( Tbrinquedo a, Testoque * b )
 void removerbrinquedo ( Testoque * a )
 {
     int codigo, posicao, qtd;
+    limpartela();
     printf("Insira o codigo do brinquedo e a quantidade a ser removida [0 = Remover registro]: "); lerint(&codigo); lerint(&qtd);
     //scanf(" %d %d", &codigo, &qtd);
     posicao = obterindiceestoque(*a, codigo);
@@ -94,11 +96,12 @@ void removerbrinquedo ( Testoque * a )
 void atualizarbrinquedo ( Testoque * a )
 {
     int cod, posicao, op;
+    limpartela();
     printf("Insira o codigo do brinquedo a ser atualizado: "); scanf(" %d", &cod);
     posicao = obterindiceestoque(*a, cod);
     if ( posicao > -1 )
     {
-        printf("Que dado deseja alterar no brinquedo %s?\n", (*a).v[posicao].nome);
+        printf("\nQue dado deseja alterar no brinquedo %s?\n\n", (*a).v[posicao].nome);
         printf(
             "1. Codigo\n"
             "2. Categoria\n"
@@ -108,21 +111,21 @@ void atualizarbrinquedo ( Testoque * a )
         scanf(" %d", &op); limpa();
         switch (op)
         {
-            case 1: printf("Insira o novo codigo para o brinquedo: "); lerint( &(*a).v[posicao].codigo ); 
-                    printf("Codigo atualizado com sucesso!\n"); break;
-            case 2: printf("Insira a nova categoria para o brinquedo: "); lerstring( (*a).v[posicao].categoria, TAMCATEGORIA );
-                    printf("Categoria atualizada com sucesso!\n"); break;
-            case 3: printf("Insira o novo nome para o brinquedo: "); lerstring( (*a).v[posicao].nome, TAMNOME );
-                    printf("Nome atualizado com sucesso!\n"); break;
-            case 4: printf("Insira o novo preco para o brinquedo: "); lerdouble( &(*a).v[posicao].preco );
-                    printf("Preco atualizado com sucesso!\n"); break;
-            case 5: printf("Insira a nova quantidade para o brinquedo: "); lerint( &(*a).v[posicao].qtd );
-                    printf("Quantidade atualizada com sucesso!\n"); break;
+            case 1: printf("\nInsira o novo codigo para o brinquedo: "); lerint( &(*a).v[posicao].codigo ); 
+                    printf("\nCodigo atualizado com sucesso!\n"); break;
+            case 2: printf("\nInsira a nova categoria para o brinquedo: "); lerstring( (*a).v[posicao].categoria, TAMCATEGORIA );
+                    printf("\nCategoria atualizada com sucesso!\n"); break;
+            case 3: printf("\nInsira o novo nome para o brinquedo: "); lerstring( (*a).v[posicao].nome, TAMNOME );
+                    printf("\nNome atualizado com sucesso!\n"); break;
+            case 4: printf("\nInsira o novo preco para o brinquedo: "); lerdouble( &(*a).v[posicao].preco );
+                    printf("\nPreco atualizado com sucesso!\n"); break;
+            case 5: printf("\nInsira a nova quantidade para o brinquedo: "); lerint( &(*a).v[posicao].qtd );
+                    printf("\nQuantidade atualizada com sucesso!\n"); break;
         }
     }
     else
     {
-        printf("Nenhum brinquedo foi encontrado com o codigo inserido.\n");
+        printf("\nNenhum brinquedo foi encontrado com o codigo inserido.\n");
     }
     pausartela();
 }
@@ -130,6 +133,7 @@ void atualizarbrinquedo ( Testoque * a )
 void listarestoque (Testoque a)
 {
     int i;
+    limpartela();
     for ( i = 0 ; i < a.qtd ; i++ )
         printf(
             "CODIGO: %d\tNOME: %s\n"
@@ -143,7 +147,7 @@ void listarcategoria ( Testoque a )
 {
     char categoria[TAMCATEGORIA];
     int i;
-    limpa();
+    limpa(); limpartela();
     printf("Insira a categoria a ser listada: "); 
     lerstring( categoria, TAMCATEGORIA );
     for ( i = 0 ; i < a.qtd ; i++ )
@@ -161,6 +165,7 @@ void listarfiltro ( Testoque a )
     int op, i;
     char dado[TAMCATEGORIA];
     char * pont;
+    limpartela();
     printf("Deseja filtrar usando:\n"
         "1. Nome\n"
         "2. Categoria\n\n");

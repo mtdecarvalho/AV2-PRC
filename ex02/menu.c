@@ -5,7 +5,7 @@
 int menu ()
 {
     int op;
-    printf("Bem vindo ao controle de estoque.\n\nO que deseja fazer?\n");
+    printf("\tBem vindo ao controle de estoque.\n\nO que deseja fazer?\n");
     printf("1. Inserir brinquedo no estoque\n"
            "2. Remover brinquedo(s)\n"
            "3. Atualizar dados de um brinquedo\n"
