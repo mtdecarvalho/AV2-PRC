@@ -11,10 +11,10 @@ void imprimirconjunto ( Tconjunto X )
     for ( i = 0 ; i < X.qtd ; i++ )
     {
         if ( X.v[i] != 0 )
-            printf("%lf\n", X.v[i]);
+            printf("\t%.2lf\n", X.v[i]);
         else cont++;
     }
-    if ( cont == X.qtd ) printf("N/A\n");
+    if ( cont == X.qtd ) printf("\tN/A\n");
 }
 
 void imprimiruniao ( Tuniao X )
@@ -23,10 +23,10 @@ void imprimiruniao ( Tuniao X )
     for ( i = 0 ; i < X.qtd ; i++ )
     {
         if ( X.v[i] != 0 )
-            printf("%lf\n", X.v[i]);
+            printf("\t%.2lf\n", X.v[i]);
         else cont++;
     }
-    if ( cont == X.qtd ) printf("N/A\n");
+    if ( cont == X.qtd ) printf("\tN/A\n");
 }
 
 void inicializarconjunto ( Tconjunto * X )
@@ -62,15 +62,20 @@ void lerconjunto ( Tconjunto * X )
 void uniao ( Tconjunto A, Tconjunto B )
 {
     Tuniao AUB;
-    int i, k;
+    int i, k, entra;
     AUB.qtd = 0;
     for ( i = 0 ; i < A.qtd ; i++ )
     {
         AUB.v[i] = A.v[i]; AUB.qtd++;
     }
-    for ( k = A.qtd, i = 0 ; i < B.qtd ; k++, i++ )
+    for ( i = 0 ; i < B.qtd ; i++ )
     {
-        AUB.v[k] = B.v[i]; AUB.qtd++;
+        for ( k = 0 ; k < AUB.qtd && entra != 0 ; k++)
+        {
+            if ( B.v[i] == AUB.v[k] ) entra = 0;
+            else entra = 1;
+        }
+        if ( entra == 1 ) { AUB.qtd++; AUB.v[AUB.qtd-1] = B.v[i]; } 
     }
     imprimiruniao(AUB);
 }
@@ -90,19 +95,12 @@ void intersecao ( Tconjunto A, Tconjunto B )
 void diferenca ( Tconjunto A, Tconjunto B )
 {
     Tconjunto AdifB;
-    int i, k, j;
+    int i, k, entra;
     AdifB.qtd=0;
     AdifB = A;
-    for ( i = 0 ; i < AdifB.qtd ; i++ )
-        for ( k = 0 ; k < B.qtd ; k++ )
-            if ( AdifB.v[i] == B.v[k] )
-                AdifB.v[i] = 0;
-    for ( i = 0 ; i < AdifB.qtd ; i++ )
-        if ( AdifB.v[i] == 0 )
-        {
-            AdifB.v[i] = AdifB.v[AdifB.qtd-1];
-            AdifB.qtd--;
-        }
+    for ( i = 0 ; i < B.qtd ; i++ )
+        for ( k = 0 ; k < AdifB.qtd ; k++ )
+            if ( AdifB.v[k] == B.v[i] ) { AdifB.v[k] = AdifB.v[AdifB.qtd-1]; AdifB.qtd--; }
     if ( AdifB.qtd == 0 ) AdifB.v[0] = 0;
     imprimirconjunto(AdifB);
 }

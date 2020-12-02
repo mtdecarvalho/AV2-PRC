@@ -11,8 +11,8 @@ int main ()
     inicializarconjunto(&A); inicializarconjunto(&B); 
     printf("\tConjunto A\n"); lerconjunto(&A);
     printf("\n\tConjunto B\n"); lerconjunto(&B);
-    printf("\n\tAUB\n"); uniao(A, B);
-    printf("\n\tAeB\n"); intersecao(A, B);
-    printf("\n\tA-B\n"); diferenca(A, B);
+    printf("\n\tAUB\n\n"); uniao(A, B);
+    printf("\n\tAeB\n\n"); intersecao(A, B);
+    printf("\n\tA-B\n\n"); diferenca(A, B);
     return 0;
 }
