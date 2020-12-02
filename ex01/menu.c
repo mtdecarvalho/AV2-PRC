@@ -9,7 +9,7 @@ int menu()
     int op;
     limpartela();
 
-        printf("\tAGENDA ELETRONICA\n"
+        printf("\t\tAGENDA ELETRONICA\n"
             "\t1. Inserir contato\n"
             "\t2. Inserir contato via arquivo\n"
             "\t3. Remover contato\n"

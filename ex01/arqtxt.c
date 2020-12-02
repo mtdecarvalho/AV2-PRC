@@ -26,7 +26,7 @@ void leragenda (char nomearq[], Tcontatos * a)
     arq = fopen(nomearq, "rt");
     if (arq!=NULL)
     {
-        (*a).qtd = 0;
+        //(*a).qtd = 0;
         Tcontato b;
         while ( !feof(arq) )
         {
@@ -51,7 +51,8 @@ void gravaragenda (char nomearq[], Tcontatos a)
         for ( i = 0 ; i < a.qtd ; i++ )
         {
             Tcontato b = a.v[i];
-            fprintf(arq, "%s,%s,%s\n", b.nome, b.email, b.telefone);
+            if ( i == a.qtd-1 ) fprintf(arq, "%s,%s,%s", b.nome, b.email, b.telefone);
+            else fprintf(arq, "%s,%s,%s\n", b.nome, b.email, b.telefone);
         }
         fclose(arq);
     }
