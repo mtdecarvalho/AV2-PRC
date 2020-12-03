@@ -27,7 +27,7 @@ int obterindiceestoque ( Testoque a, int codigo )
     return achou == 1 ? i : -1;
 }
 
-void lerbrinquedo ( Tbrinquedo * a, Testoque * b )
+int lerbrinquedo ( Tbrinquedo * a, Testoque * b )
 {
     int posicao = (*b).qtd, i, fim=0;
     limpartela();
@@ -40,17 +40,15 @@ void lerbrinquedo ( Tbrinquedo * a, Testoque * b )
             scanf(" %d", &(*a).qtd );
                 (*b).v[i].qtd += (*a).qtd;
             printf("Quantidade adicionada ao estoque com sucesso.\n"); pausartela();
-            fim = 1;
+            return 0;
         }
     } 
-    if ( fim == 0 )
-    {
         printf("Insira a categoria do brinquedo: "); limpa(); lerstring( (*a).categoria, TAMCATEGORIA );
         printf("Insira o nome do brinquedo: "); lerstring( (*a).nome, TAMNOME );
         printf("Insira o preco do brinquedo: "); lerdouble( &(*a).preco );
         printf("Insira a quantidade: "); lerint( &(*a).qtd );
         printf("Brinquedo lido com sucesso.\n"); pausartela();
-    }
+        return 1;
 }
 
 void inserirbrinquedo ( Tbrinquedo a, Testoque * b )
@@ -65,7 +63,6 @@ void removerbrinquedo ( Testoque * a )
     int codigo, posicao, qtd;
     limpartela();
     printf("Insira o codigo do brinquedo e a quantidade a ser removida [0 = Remover registro]: "); lerint(&codigo); lerint(&qtd);
-    //scanf(" %d %d", &codigo, &qtd);
     posicao = obterindiceestoque(*a, codigo);
     if ( posicao > -1 )
     {
@@ -95,7 +92,7 @@ void removerbrinquedo ( Testoque * a )
 
 void atualizarbrinquedo ( Testoque * a )
 {
-    int cod, posicao, op;
+    int cod, posicao, op, fim=0;
     limpartela();
     printf("Insira o codigo do brinquedo a ser atualizado: "); scanf(" %d", &cod);
     posicao = obterindiceestoque(*a, cod);
@@ -103,16 +100,26 @@ void atualizarbrinquedo ( Testoque * a )
     {
         printf("\nQue dado deseja alterar no brinquedo %s?\n\n", (*a).v[posicao].nome);
         printf(
-            "1. Codigo\n"
-            "2. Categoria\n"
-            "3. Nome\n"
-            "4. Preco\n"
-            "5. Quantidade\n");
+            "\t1. Codigo\n"
+            "\t2. Categoria\n"
+            "\t3. Nome\n"
+            "\t4. Preco\n"
+            "\t5. Quantidade\n");
         scanf(" %d", &op); limpa();
         switch (op)
         {
-            case 1: printf("\nInsira o novo codigo para o brinquedo: "); lerint( &(*a).v[posicao].codigo ); 
-                    printf("\nCodigo atualizado com sucesso!\n"); break;
+            case 1: 
+                    do {
+                        printf("\nInsira o novo codigo para o brinquedo: "); scanf(" %d", &cod);
+                        if ( obterindiceestoque(*a, cod) == -1 )
+                        {
+                            (*a).v[posicao].codigo = cod;
+                            printf("\nCodigo atualizado com sucesso!\n");
+                            fim = 1;
+                        }
+                        else printf("O codigo inserido ja existe no estoque.\n");
+                    } while ( fim != 1 );
+                    break;
             case 2: printf("\nInsira a nova categoria para o brinquedo: "); lerstring( (*a).v[posicao].categoria, TAMCATEGORIA );
                     printf("\nCategoria atualizada com sucesso!\n"); break;
             case 3: printf("\nInsira o novo nome para o brinquedo: "); lerstring( (*a).v[posicao].nome, TAMNOME );
@@ -138,9 +145,9 @@ void listarestoque (Testoque a)
         limpartela();
         for ( i = 0 ; i < a.qtd ; i++ )
             printf(
-                "CODIGO: %d\tNOME: %s\n"
-                "CATEGORIA: %s\n"
-                "PRECO: %.2lf\tQTD: %d\n\n"
+                "\tCODIGO: %d\tNOME: %s\n"
+                "\tCATEGORIA: %s\n"
+                "\tPRECO: %.2lf\tQTD: %d\n\n"
                 , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
     }
     else printf("\nNao ha nenhum brinquedo no estoque.\n\n");
@@ -159,9 +166,9 @@ void listarcategoria ( Testoque a )
         for ( i = 0 ; i < a.qtd ; i++ )
             if ( strcmp(categoria, a.v[i].categoria) == 0 )
                 printf(
-                "CODIGO: %d\tNOME: %s\n"
-                "CATEGORIA: %s\n"
-                "PRECO: %.2lf\tQTD: %d\n\n"
+                "\tCODIGO: %d\tNOME: %s\n"
+                "\tCATEGORIA: %s\n"
+                "\tPRECO: %.2lf\tQTD: %d\n\n"
                 , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
     }
     else printf("\nNao ha nenhum brinquedo no estoque.\n\n");
@@ -171,44 +178,54 @@ void listarcategoria ( Testoque a )
 
 void listarfiltro ( Testoque a )
 {
-    int op, i;
+    int op, i, cont=0;
     char dado[TAMCATEGORIA];
     char * pont;
     if ( a.qtd > 0 )
     {
         limpartela();
-        printf("Deseja filtrar usando:\n"
-            "1. Nome\n"
-            "2. Categoria\n\n");
+        printf("\t\tDeseja filtrar usando:\n"
+            "\t1. Nome\n"
+            "\t2. Categoria\n\n");
         lerint( &op ); limpa();
         switch (op) 
         {
             case 1: 
                 printf("Insira o nome a ser buscado: "); lerstring( dado, TAMCATEGORIA );
+                printf("\n");
                 for ( i = 0 ; i < a.qtd ; i++ )
                 {
                     pont = strstr( a.v[i].nome, dado ); 
                     if ( pont != NULL )
+                    {
                         printf(
-                        "CODIGO: %d\tNOME: %s\n"
-                        "CATEGORIA: %s\n"
-                        "PRECO: %.2lf\tQTD: %d\n\n"
+                        "\tCODIGO: %d\tNOME: %s\n"
+                        "\tCATEGORIA: %s\n"
+                        "\tPRECO: %.2lf\tQTD: %d\n\n"
                         , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
+                        cont++;
+                    }
                 }
+                if ( cont == 0 ) printf("Nenhum contato encontrado.\n\n");
                 pausartela();
                 break;
             case 2: 
                 printf("Insira a categoria a ser buscada: "); lerstring(dado, TAMCATEGORIA );
+                printf("\n");
                 for ( i = 0 ; i < a.qtd ; i++ )
                 {
                     pont = strstr( a.v[i].categoria, dado ); 
                     if ( pont != NULL )
+                    {
                         printf(
-                        "CODIGO: %d\tNOME: %s\n"
-                        "CATEGORIA: %s\n"
-                        "PRECO: %.2lf\tQTD: %d\n\n"
+                        "\tCODIGO: %d\tNOME: %s\n"
+                        "\tCATEGORIA: %s\n"
+                        "\tPRECO: %.2lf\tQTD: %d\n\n"
                         , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
+                        cont++;
+                    }
                 }
+                if ( cont == 0 ) printf("Nenhum contato encontrado.\n\n");
                 pausartela();
                 break;
         }

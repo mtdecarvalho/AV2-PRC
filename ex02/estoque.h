@@ -21,7 +21,7 @@ typedef struct
 
 void inicializarestoque ( Testoque * a );
 int obterindiceestoque ( Testoque a, int codigo );
-void lerbrinquedo ( Tbrinquedo * a, Testoque * b );
+int lerbrinquedo ( Tbrinquedo * a, Testoque * b );
 void inserirbrinquedo ( Tbrinquedo a, Testoque * b );
 void removerbrinquedo ( Testoque * a );
 void atualizarbrinquedo ( Testoque * a );

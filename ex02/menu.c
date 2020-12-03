@@ -5,14 +5,14 @@
 int menu ()
 {
     int op;
-    printf("\tBem vindo ao controle de estoque.\n\nO que deseja fazer?\n");
-    printf("1. Inserir brinquedo no estoque\n"
-           "2. Remover brinquedo(s)\n"
-           "3. Atualizar dados de um brinquedo\n"
-           "4. Listar todos os brinquedos\n"
-           "5. Listar todos de uma categoria\n"
-           "6. Listar filtrando por parte do nome ou categoria\n"
-           "0. Sair\n");
+    printf("\t\tBem vindo ao controle de estoque.\n\t\t\tO que deseja fazer?\n\n");
+    printf("\t1. Inserir brinquedo no estoque\n"
+           "\t2. Remover brinquedo(s)\n"
+           "\t3. Atualizar dados de um brinquedo\n"
+           "\t4. Listar todos os brinquedos\n"
+           "\t5. Listar todos de uma categoria\n"
+           "\t6. Listar filtrando por parte do nome ou categoria\n"
+           "\t0. Sair\n");
     lerint( &op );
     return op;
 }

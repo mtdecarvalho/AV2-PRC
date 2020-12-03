@@ -84,27 +84,29 @@ void filtrarcontato (Tcontatos a)
         limpartela();
         printf(
         "Deseja buscar o contato usando parte de que dado?\n"
-        "1. Nome\n"
-        "2. Email\n"
-        "3. Telefone\n");
+        "\t1. Nome\n"
+        "\t2. Email\n"
+        "\t3. Telefone\n");
         lerint(&op); limpa();
         switch (op)
         {
             case 1:
                 printf("Insira parte do nome: "); lerstring( dado, TAMNOME );
+                printf("\n");
                 for ( i = 0 ; i < a.qtd ; i++ ) 
                 {
                     pont = strstr( a.v[i].nome, dado ); 
                     if ( pont != NULL )
                         printf(
-                        "Nome: %s\n"
-                        "Email: %s\n"
-                        "Telefone: %s\n"
+                        "\tNome: %s\n"
+                        "\tEmail: %s\n"
+                        "\tTelefone: %s\n\n"
                         , a.v[i].nome, a.v[i].email, a.v[i].telefone);
                 }
                 break;
             case 2:
                 printf("Insira parte do email: "); lerstring( dado, TAMEMAIL );
+                printf("\n");
                 for ( i = 0 ; i < a.qtd ; i++ ) 
                 {
                     pont = strstr( a.v[i].email, dado ); 
@@ -118,6 +120,7 @@ void filtrarcontato (Tcontatos a)
                 break;
             case 3:
                 printf("Insira parte do telefone: "); lerstring( dado, TAMEMAIL );
+                printf("\n");
                 for ( i = 0 ; i < a.qtd ; i++ ) 
                 {
                     pont = strstr( a.v[i].telefone, dado ); 
@@ -153,20 +156,22 @@ void removercontato (Tcontatos * a)
 {
     int pos;
     char email[TAMEMAIL];
-    limpartela();
-    printf("Insira o email do contato a ser removido: ");
-    lerstring(email, TAMEMAIL );
-    pos = obterindiceemail(*a, email);
-    if ( pos > -1 )
+    if ( (*a).qtd > 0 )
     {
-        (*a).v[pos] = (*a).v[ (*a).qtd-1 ];
-        (*a).qtd--;
-        printf("Contato removido com sucesso.\n");
-        pausartela();
+        limpartela();
+        printf("Insira o email do contato a ser removido: ");
+        lerstring(email, TAMEMAIL );
+        pos = obterindiceemail(*a, email);
+        if ( pos > -1 )
+        {
+            (*a).v[pos] = (*a).v[ (*a).qtd-1 ];
+            (*a).qtd--;
+            printf("Contato removido com sucesso.\n");
+        }
+        else 
+        {
+            printf("O email informado nao foi encontrado.\n");
+        }
     }
-    else 
-    {
-        printf("O email informado nao foi encontrado.\n");
-        pausartela();
-    }
+    else printf("\nNao ha nenhum contato registrado.\n\n");
 }

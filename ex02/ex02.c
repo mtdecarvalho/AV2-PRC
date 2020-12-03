@@ -18,7 +18,9 @@ int main ()
         op = menu();
         switch (op)
         {
-            case 1: lerbrinquedo(&brinquedo, &estoque); inserirbrinquedo(brinquedo, &estoque); break;
+            case 1:
+            if ( lerbrinquedo(&brinquedo, &estoque) == 1 ) inserirbrinquedo(brinquedo, &estoque);
+            break;
             case 2: removerbrinquedo(&estoque); break;
             case 3: atualizarbrinquedo(&estoque); break;
             case 4: listarestoque(estoque); break;
