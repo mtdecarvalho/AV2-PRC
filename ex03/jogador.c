@@ -29,6 +29,6 @@ int fimdejogo ( int area[][4], int jogador )
     switch (op)
     {
         case 's': case 'S': esvaziarcampo(area); return 1; break;
-        default: printf("\nFim de jogo.\n\n"); return 0; break;
+        default: printf("\n\tFim de jogo.\n\n"); return 0; break;
     }
 }

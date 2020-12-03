@@ -47,6 +47,7 @@ void lerconjunto ( Tconjunto * X )
 {
     int i, k;
     double valor = 1;
+    printf("Para terminar a leitura, digite 0.\n");
     for ( i = 0 ; i < 100 && valor != 0 ; i++ )
     {
         lerdouble(&valor);

@@ -8,6 +8,7 @@ int main ()
 {
     Tconjunto A, B;
     int i;
+    limpartela();
     inicializarconjunto(&A); inicializarconjunto(&B); 
     printf("\tConjunto A\n"); lerconjunto(&A);
     printf("\n\tConjunto B\n"); lerconjunto(&B);
