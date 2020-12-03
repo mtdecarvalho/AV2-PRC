@@ -133,13 +133,17 @@ void atualizarbrinquedo ( Testoque * a )
 void listarestoque (Testoque a)
 {
     int i;
-    limpartela();
-    for ( i = 0 ; i < a.qtd ; i++ )
-        printf(
-            "CODIGO: %d\tNOME: %s\n"
-            "CATEGORIA: %s\n"
-            "PRECO: %.2lf\tQTD: %d\n\n"
-            , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
+    if ( a.qtd > 0 )
+    {
+        limpartela();
+        for ( i = 0 ; i < a.qtd ; i++ )
+            printf(
+                "CODIGO: %d\tNOME: %s\n"
+                "CATEGORIA: %s\n"
+                "PRECO: %.2lf\tQTD: %d\n\n"
+                , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
+    }
+    else printf("\nNao ha nenhum brinquedo no estoque.\n\n");
     pausartela();
 }
 
@@ -147,17 +151,22 @@ void listarcategoria ( Testoque a )
 {
     char categoria[TAMCATEGORIA];
     int i;
-    limpa(); limpartela();
-    printf("Insira a categoria a ser listada: "); 
-    lerstring( categoria, TAMCATEGORIA );
-    for ( i = 0 ; i < a.qtd ; i++ )
-        if ( strcmp(categoria, a.v[i].categoria) == 0 )
-            printf(
-            "CODIGO: %d\tNOME: %s\n"
-            "CATEGORIA: %s\n"
-            "PRECO: %.2lf\tQTD: %d\n\n"
-            , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
+    if ( a.qtd > 0 )
+    {
+        limpa(); limpartela();
+        printf("Insira a categoria a ser listada: "); 
+        lerstring( categoria, TAMCATEGORIA );
+        for ( i = 0 ; i < a.qtd ; i++ )
+            if ( strcmp(categoria, a.v[i].categoria) == 0 )
+                printf(
+                "CODIGO: %d\tNOME: %s\n"
+                "CATEGORIA: %s\n"
+                "PRECO: %.2lf\tQTD: %d\n\n"
+                , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
+    }
+    else printf("\nNao ha nenhum brinquedo no estoque.\n\n");
     pausartela();
+
 }
 
 void listarfiltro ( Testoque a )
@@ -165,40 +174,44 @@ void listarfiltro ( Testoque a )
     int op, i;
     char dado[TAMCATEGORIA];
     char * pont;
-    limpartela();
-    printf("Deseja filtrar usando:\n"
-        "1. Nome\n"
-        "2. Categoria\n\n");
-    lerint( &op ); limpa();
-    switch (op) 
+    if ( a.qtd > 0 )
     {
-        case 1: 
-            printf("Insira o nome a ser buscado: "); lerstring( dado, TAMCATEGORIA );
-            for ( i = 0 ; i < a.qtd ; i++ )
-            {
-                pont = strstr( a.v[i].nome, dado ); 
-                if ( pont != NULL )
-                    printf(
-                    "CODIGO: %d\tNOME: %s\n"
-                    "CATEGORIA: %s\n"
-                    "PRECO: %.2lf\tQTD: %d\n\n"
-                    , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
-            }
-            pausartela();
-            break;
-        case 2: 
-            printf("Insira a categoria a ser buscada: "); lerstring(dado, TAMCATEGORIA );
-            for ( i = 0 ; i < a.qtd ; i++ )
-            {
-                pont = strstr( a.v[i].categoria, dado ); 
-                if ( pont != NULL )
-                    printf(
-                    "CODIGO: %d\tNOME: %s\n"
-                    "CATEGORIA: %s\n"
-                    "PRECO: %.2lf\tQTD: %d\n\n"
-                    , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
-            }
-            pausartela();
-            break;
+        limpartela();
+        printf("Deseja filtrar usando:\n"
+            "1. Nome\n"
+            "2. Categoria\n\n");
+        lerint( &op ); limpa();
+        switch (op) 
+        {
+            case 1: 
+                printf("Insira o nome a ser buscado: "); lerstring( dado, TAMCATEGORIA );
+                for ( i = 0 ; i < a.qtd ; i++ )
+                {
+                    pont = strstr( a.v[i].nome, dado ); 
+                    if ( pont != NULL )
+                        printf(
+                        "CODIGO: %d\tNOME: %s\n"
+                        "CATEGORIA: %s\n"
+                        "PRECO: %.2lf\tQTD: %d\n\n"
+                        , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
+                }
+                pausartela();
+                break;
+            case 2: 
+                printf("Insira a categoria a ser buscada: "); lerstring(dado, TAMCATEGORIA );
+                for ( i = 0 ; i < a.qtd ; i++ )
+                {
+                    pont = strstr( a.v[i].categoria, dado ); 
+                    if ( pont != NULL )
+                        printf(
+                        "CODIGO: %d\tNOME: %s\n"
+                        "CATEGORIA: %s\n"
+                        "PRECO: %.2lf\tQTD: %d\n\n"
+                        , a.v[i].codigo, a.v[i].nome, a.v[i].categoria, a.v[i].preco, a.v[i].qtd);
+                }
+                pausartela();
+                break;
+        }
     }
+    else { printf("\nNao ha nenhum brinquedo no estoque.\n\n"); pausartela(); }
 }

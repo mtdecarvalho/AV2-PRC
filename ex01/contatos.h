@@ -22,7 +22,8 @@ typedef struct
 void inicializarcontatos (Tcontatos * a);
 int obterindiceemail (Tcontatos a, char dado[]);
 int validartelefone ( char a[] );
-void lercontato (Tcontato * a);
+int validaremail ( char a[], Tcontatos b );
+void lercontato (Tcontato * a, Tcontatos * agenda );
 void inserircontato (Tcontato a, Tcontatos * b);
 void filtrarcontato (Tcontatos a);
 void listarcontatos (Tcontatos a);

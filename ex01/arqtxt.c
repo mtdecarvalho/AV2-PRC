@@ -33,12 +33,12 @@ void leragenda (char nomearq[], Tcontatos * a)
             lerAte(arq, ',' , b.nome, TAMNOME );
             lerAte(arq, ',', b.email, TAMEMAIL);
             lerAte(arq, '\n', b.telefone, TAMTEL);
-            if ( validartelefone(b.telefone)==1 ) inserircontato(b, &*a);
+            if ( validaremail(b.email, *a) == 1 && validartelefone(b.telefone) == 1 ) inserircontato(b, &*a);
             else cont++;
         }
-    }
-    if ( cont != 0 ) { printf("Um ou mais contatos invalidos foram ignorados.\n"); pausartela(); }
-    else { printf("Todos os contatos foram inseridos com sucesso!\n"); pausartela(); }
+        if ( cont != 0 ) { printf("Um ou mais contatos invalidos foram ignorados.\n"); pausartela(); }
+        else { printf("Todos os contatos foram inseridos com sucesso!\n"); pausartela(); }
+    } else { printf("Arquivo nao encontrado.\n"); pausartela(); }
 }
 
 void gravaragenda (char nomearq[], Tcontatos a)

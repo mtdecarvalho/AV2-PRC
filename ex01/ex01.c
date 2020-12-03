@@ -20,7 +20,7 @@ int main ()
     {
         switch ( menu() )
         {
-            case 1: limpa(); lercontato(&contato); inserircontato(contato, &contatos); break;
+            case 1: limpa(); lercontato(&contato, &contatos); inserircontato(contato, &contatos); break;
             case 2: limpa(); printf("Insira o nome do arquivo a ser lido: "); lerstring( nomearq, 100 );
             leragenda(nomearq, &contatos); break;
             case 3: limpa(); removercontato (&contatos); break;

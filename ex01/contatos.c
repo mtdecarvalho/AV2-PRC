@@ -40,15 +40,31 @@ int validartelefone ( char a[] )
     return 1;
 }
 
-void lercontato (Tcontato * a)
+int validaremail ( char a[], Tcontatos b )
+{
+    if ( b.qtd == 0 ) return 1;
+    else 
+    {
+        if ( obterindiceemail( b, a ) != -1 ) return 0;
+        else return 1;
+    }
+}
+
+void lercontato (Tcontato * a, Tcontatos * agenda )
 {
     limpartela();
     printf("Insira o nome do contato: "); lerstring( (*a).nome, TAMNOME );
-    printf("Insira o email do contato: "); lerstring( (*a).email, TAMEMAIL );
+
+    do {
+        printf("Insira o email do contato: "); lerstring( (*a).email, TAMEMAIL );
+        if ( validaremail( (*a).email, (*agenda) ) != 1 ) printf("O email ja existe na agenda.\n");
+    } while ( validaremail ( (*a).email, (*agenda) ) != 1 );
+
     do {
         printf("Insira o numero de telefone do contato: "); lerstring( (*a).telefone, TAMTEL );
         if ( validartelefone( (*a).telefone ) != 1 ) printf("O conteudo inserido nao eh um numero.\n");
     } while ( validartelefone( (*a).telefone ) != 1 );
+
     printf("Contato lido com sucesso!\n"); pausartela();
 }
 
@@ -63,62 +79,64 @@ void filtrarcontato (Tcontatos a)
     int op, i, tel;
     char dado[TAMEMAIL];
     char * pont;
-    limpartela();
-    printf(
-    "Deseja buscar o contato usando parte de que dado?\n"
-    "1. Nome\n"
-    "2. Email\n"
-    "3. Telefone\n");
-    lerint(&op); limpa();
-    switch (op)
+    if ( a.qtd > 0 )
     {
-        case 1:
-            printf("Insira parte do nome: "); lerstring( dado, TAMNOME );
-            for ( i = 0 ; i < a.qtd ; i++ ) 
-            {
-                pont = strstr( a.v[i].nome, dado ); 
-                if ( pont != NULL )
-                    printf(
-                    "Nome: %s\n"
-                    "Email: %s\n"
-                    "Telefone: %s\n"
-                    , a.v[i].nome, a.v[i].email, a.v[i].telefone);
-            }
-            break;
-        case 2:
-            printf("Insira parte do email: "); lerstring( dado, TAMEMAIL );
-            for ( i = 0 ; i < a.qtd ; i++ ) 
-            {
-                pont = strstr( a.v[i].email, dado ); 
-                if ( pont != NULL )
-                    printf(
-                    "\tNome: %s\n"
-                    "\tEmail: %s\n"
-                    "\tTelefone: %s\n\n"
-                    , a.v[i].nome, a.v[i].email, a.v[i].telefone);
-            }
-            break;
-        case 3:
-            printf("Insira parte do telefone: "); lerstring( dado, TAMEMAIL );
-            for ( i = 0 ; i < a.qtd ; i++ ) 
-            {
-                pont = strstr( a.v[i].telefone, dado ); 
-                if ( pont != NULL )
-                    printf(
-                    "\tNome: %s\n"
-                    "\tEmail: %s\n"
-                    "\tTelefone: %s\n\n"
-                    , a.v[i].nome, a.v[i].email, a.v[i].telefone);
-            }
-            break;
-    }
-    
+        limpartela();
+        printf(
+        "Deseja buscar o contato usando parte de que dado?\n"
+        "1. Nome\n"
+        "2. Email\n"
+        "3. Telefone\n");
+        lerint(&op); limpa();
+        switch (op)
+        {
+            case 1:
+                printf("Insira parte do nome: "); lerstring( dado, TAMNOME );
+                for ( i = 0 ; i < a.qtd ; i++ ) 
+                {
+                    pont = strstr( a.v[i].nome, dado ); 
+                    if ( pont != NULL )
+                        printf(
+                        "Nome: %s\n"
+                        "Email: %s\n"
+                        "Telefone: %s\n"
+                        , a.v[i].nome, a.v[i].email, a.v[i].telefone);
+                }
+                break;
+            case 2:
+                printf("Insira parte do email: "); lerstring( dado, TAMEMAIL );
+                for ( i = 0 ; i < a.qtd ; i++ ) 
+                {
+                    pont = strstr( a.v[i].email, dado ); 
+                    if ( pont != NULL )
+                        printf(
+                        "\tNome: %s\n"
+                        "\tEmail: %s\n"
+                        "\tTelefone: %s\n\n"
+                        , a.v[i].nome, a.v[i].email, a.v[i].telefone);
+                }
+                break;
+            case 3:
+                printf("Insira parte do telefone: "); lerstring( dado, TAMEMAIL );
+                for ( i = 0 ; i < a.qtd ; i++ ) 
+                {
+                    pont = strstr( a.v[i].telefone, dado ); 
+                    if ( pont != NULL )
+                        printf(
+                        "\tNome: %s\n"
+                        "\tEmail: %s\n"
+                        "\tTelefone: %s\n\n"
+                        , a.v[i].nome, a.v[i].email, a.v[i].telefone);
+                }
+                break;
+        }
+    } else printf("\nNao ha nenhum contato registrado.\n\n");
 }
 
 void listarcontatos (Tcontatos a)
 {
     int i; 
-    if (a.qtd == 0) printf("Nao ha nenhum contato registrado.\n");
+    if (a.qtd == 0) printf("\nNao ha nenhum contato registrado.\n\n");
     else
     { 
         limpartela();
