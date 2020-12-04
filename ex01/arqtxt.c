@@ -21,12 +21,11 @@ char *lerAte(FILE *arq, char sep, char strdest[], int max)
 }
 void leragenda (char nomearq[], Tcontatos * a)
 {
-    int cont=0;
     FILE *arq;
     arq = fopen(nomearq, "rt");
     if (arq!=NULL)
     {
-        //(*a).qtd = 0;
+        (*a).qtd = 0;
         Tcontato b;
         while ( !feof(arq) )
         {
@@ -34,11 +33,8 @@ void leragenda (char nomearq[], Tcontatos * a)
             lerAte(arq, ',', b.email, TAMEMAIL);
             lerAte(arq, '\n', b.telefone, TAMTEL);
             if ( validaremail(b.email, *a) == 1 && validartelefone(b.telefone) == 1 ) inserircontato(b, &*a);
-            else cont++;
         }
-        if ( cont != 0 ) { printf("Um ou mais contatos invalidos foram ignorados.\n"); pausartela(); }
-        else { printf("Todos os contatos foram inseridos com sucesso!\n"); pausartela(); }
-    } else { printf("Arquivo nao encontrado.\n"); pausartela(); }
+    }
 }
 
 void gravaragenda (char nomearq[], Tcontatos a)

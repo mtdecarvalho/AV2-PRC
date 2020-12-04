@@ -13,22 +13,23 @@ int main ()
 {
     Tcontato contato;
     Tcontatos contatos;
-    char nomearq[100];
+    char nomearq[100] = "agenda.txt";
     int fim = 0;
     inicializarcontatos(&contatos);
+    leragenda( nomearq , &contatos );
     do
     {
         switch ( menu() )
         {
             case 1: limpa(); lercontato(&contato, &contatos); inserircontato(contato, &contatos); break;
-            case 2: limpa(); printf("Insira o nome do arquivo a ser lido: "); lerstring( nomearq, 100 );
-            leragenda(nomearq, &contatos); break;
-            case 3: limpa(); removercontato (&contatos); pausartela(); break;
-            case 4: limpa(); listarcontatos(contatos); pausartela();  break;
-            case 5: limpa(); filtrarcontato(contatos); pausartela(); break;
-            case 6: limpa(); printf("Insira um nome para o arquivo: "); lerstring( nomearq, 100 );
-            gravaragenda(nomearq, contatos); break;
-            case 0: printf("Encerrando...\n"); fim=1; break;
+            /*case 2: limpa(); printf("Insira o nome do arquivo a ser lido: "); lerstring( nomearq, 100 );
+            leragenda(nomearq, &contatos); break;*/
+            case 2: limpa(); removercontato (&contatos); pausartela(); break;
+            case 3: limpa(); listarcontatos(contatos); pausartela();  break;
+            case 4: limpa(); filtrarcontato(contatos); pausartela(); break;
+            /*case 6: limpa(); printf("Insira um nome para o arquivo: "); lerstring( nomearq, 100 );
+             break;*/
+            case 0: gravaragenda(nomearq, contatos); printf("Encerrando...\n"); fim=1; break;
         }
     }
     while (fim != 1);
