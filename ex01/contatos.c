@@ -119,7 +119,10 @@ void filtrarcontato (Tcontatos a)
                 }
                 break;
             case 3:
-                printf("Insira parte do telefone: "); lerstring( dado, TAMEMAIL );
+                do {
+                    printf("Insira parte do telefone: "); lerstring( dado, TAMTEL );
+                    if ( validartelefone(dado) != 1 ) printf("Insira um numero de telefone valido.\n");
+                } while ( validartelefone(dado) != 1 );
                 printf("\n");
                 for ( i = 0 ; i < a.qtd ; i++ ) 
                 {
