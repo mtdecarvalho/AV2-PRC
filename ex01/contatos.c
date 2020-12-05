@@ -76,7 +76,7 @@ void inserircontato (Tcontato a, Tcontatos * b)
 
 void filtrarcontato (Tcontatos a)
 {
-    int op, i, tel;
+    int op, i, tel, cont=0;
     char dado[TAMEMAIL];
     char * pont;
     if ( a.qtd > 0 )
@@ -97,12 +97,16 @@ void filtrarcontato (Tcontatos a)
                 {
                     pont = strstr( a.v[i].nome, dado ); 
                     if ( pont != NULL )
+                    {
                         printf(
                         "\tNome: %s\n"
                         "\tEmail: %s\n"
                         "\tTelefone: %s\n\n"
                         , a.v[i].nome, a.v[i].email, a.v[i].telefone);
+                        cont++;
+                    }
                 }
+                if ( cont == 0 ) printf("\tNenhum contato encontrado.\n\n");
                 break;
             case 2:
                 printf("Insira parte do email: "); lerstring( dado, TAMEMAIL );
@@ -111,12 +115,16 @@ void filtrarcontato (Tcontatos a)
                 {
                     pont = strstr( a.v[i].email, dado ); 
                     if ( pont != NULL )
+                    {
                         printf(
                         "\tNome: %s\n"
                         "\tEmail: %s\n"
                         "\tTelefone: %s\n\n"
                         , a.v[i].nome, a.v[i].email, a.v[i].telefone);
+                        cont++;
+                    }
                 }
+                if ( cont == 0 ) printf("\tNenhum contato encontrado.\n\n");
                 break;
             case 3:
                 do {
@@ -128,12 +136,16 @@ void filtrarcontato (Tcontatos a)
                 {
                     pont = strstr( a.v[i].telefone, dado ); 
                     if ( pont != NULL )
+                    {
                         printf(
                         "\tNome: %s\n"
                         "\tEmail: %s\n"
                         "\tTelefone: %s\n\n"
                         , a.v[i].nome, a.v[i].email, a.v[i].telefone);
+                        cont++;
+                    }
                 }
+                if ( cont == 0 ) printf("\tNenhum contato encontrado.\n\n");
                 break;
         }
     } else printf("\nNao ha nenhum contato registrado.\n\n");

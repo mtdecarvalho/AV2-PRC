@@ -44,4 +44,5 @@ void lerstring ( char a[], int tam )
 {
     fgets(a, tam, stdin); 
     if (a[strlen(a)-1] == '\n') a[strlen(a)-1] = '\0';
+    if ( strlen(a) == tam-1 ) limpa();
 }
