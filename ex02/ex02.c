@@ -1,5 +1,6 @@
 #include "util.h"
 #include "estoque.h"
+#include "arqtxt.h"
 #include "menu.h"
 
 #include <stdio.h>
@@ -12,6 +13,7 @@ int main ()
     Testoque estoque;
     int op;
     inicializarestoque(&estoque);
+    lerestoque("estoque.txt", &estoque);
     do 
     {
         limpartela();
@@ -26,6 +28,7 @@ int main ()
             case 4: listarestoque(estoque); break;
             case 5: listarcategoria(estoque); break;
             case 6: listarfiltro(estoque); break;
+            case 0: gravarestoque("estoque.txt", estoque); break;
         }
     } while (op != 0);
     return 0;
