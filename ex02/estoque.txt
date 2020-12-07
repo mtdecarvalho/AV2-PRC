@@ -1,2 +1,4 @@
-2,teste2,teste2,1000.00,600
-1,testeeeeeeeeeeeeeee,eeeeeeeeeeeeeeeeeeeeeeeeeeeee,1.00,1
+5,Boneco,Max Steel,20.00,100
+1,Boneca,Barbie ,20.00,120
+2,Slime,Slime,15.00,100
+666,Boneco,Belzebuzinho,10.00,999

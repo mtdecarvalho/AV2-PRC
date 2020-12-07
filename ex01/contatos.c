@@ -37,7 +37,8 @@ int validartelefone ( char a[] )
     for ( i = 0 ; i < strlen(a) ; i++ )
         if ( !isdigit(a[i]) )
             return 0;
-    return 1;
+    if ( ( ehvazio(a) ) == 0 ) return 0;
+    else return 1;
 }
 
 int validaremail ( char a[], Tcontatos b )
@@ -46,6 +47,7 @@ int validaremail ( char a[], Tcontatos b )
     else 
     {
         if ( obterindiceemail( b, a ) != -1 ) return 0;
+        if ( ( ehvazio(a) ) == 0 ) return 0;
         else return 1;
     }
 }
@@ -53,11 +55,13 @@ int validaremail ( char a[], Tcontatos b )
 void lercontato (Tcontato * a, Tcontatos * agenda )
 {
     limpartela();
-    printf("Insira o nome do contato: "); lerstring( (*a).nome, TAMNOME );
+    do {
+        printf("Insira o nome do contato: "); lerstring( (*a).nome, TAMNOME );
+    } while ( ehvazio((*a).nome) == 0);
 
     do {
         printf("Insira o email do contato: "); lerstring( (*a).email, TAMEMAIL );
-        if ( validaremail( (*a).email, (*agenda) ) != 1 ) printf("O email ja existe na agenda.\n");
+        if ( validaremail( (*a).email, (*agenda) ) != 1 ) printf("O email ja existe na agenda ou eh invalido.\n");
     } while ( validaremail ( (*a).email, (*agenda) ) != 1 );
 
     do {
@@ -147,6 +151,7 @@ void filtrarcontato (Tcontatos a)
                 }
                 if ( cont == 0 ) printf("\tNenhum contato encontrado.\n\n");
                 break;
+            default: printf("\tComando invalido.\n\n"); break;
         }
     } else printf("\nNao ha nenhum contato registrado.\n\n");
 }

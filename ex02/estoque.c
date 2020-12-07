@@ -43,12 +43,19 @@ int lerbrinquedo ( Tbrinquedo * a, Testoque * b )
             return 0;
         }
     } 
-        printf("Insira a categoria do brinquedo: "); limpa(); lerstring( (*a).categoria, TAMCATEGORIA );
+    limpa();
+    do {
+        printf("Insira a categoria do brinquedo: "); lerstring( (*a).categoria, TAMCATEGORIA );
+    } while ( ehvazio( (*a).categoria) == 0);
+
+    do {
         printf("Insira o nome do brinquedo: "); lerstring( (*a).nome, TAMNOME );
-        printf("Insira o preco do brinquedo: "); lerdouble( &(*a).preco );
-        printf("Insira a quantidade: "); lerint( &(*a).qtd );
-        printf("Brinquedo lido com sucesso.\n"); pausartela();
-        return 1;
+    } while ( ehvazio( (*a).nome) == 0);
+    
+    printf("Insira o preco do brinquedo: "); lerdouble( &(*a).preco );
+    printf("Insira a quantidade: "); lerint( &(*a).qtd );
+    printf("Brinquedo lido com sucesso.\n"); pausartela();
+    return 1;
 }
 
 void inserirbrinquedo ( Tbrinquedo a, Testoque * b )
@@ -126,14 +133,21 @@ void atualizarbrinquedo ( Testoque * a )
                             else printf("O codigo inserido ja existe no estoque.\n");
                         } while ( fim != 1 );
                         break;
-                case 2: printf("\nInsira a nova categoria para o brinquedo: "); lerstring( (*a).v[posicao].categoria, TAMCATEGORIA );
+                case 2: 
+                        do {
+                        printf("\nInsira a nova categoria para o brinquedo: "); lerstring( (*a).v[posicao].categoria, TAMCATEGORIA );
+                        } while ( ehvazio( (*a).v[posicao].categoria ) == 0 );
                         printf("\nCategoria atualizada com sucesso!\n"); break;
-                case 3: printf("\nInsira o novo nome para o brinquedo: "); lerstring( (*a).v[posicao].nome, TAMNOME );
+                case 3: 
+                        do {
+                            printf("\nInsira o novo nome para o brinquedo: "); lerstring( (*a).v[posicao].nome, TAMNOME );
+                        } while ( ehvazio( (*a).v[posicao].nome ) == 0 );
                         printf("\nNome atualizado com sucesso!\n"); break;
                 case 4: printf("\nInsira o novo preco para o brinquedo: "); lerdouble( &(*a).v[posicao].preco );
                         printf("\nPreco atualizado com sucesso!\n"); break;
                 case 5: printf("\nInsira a nova quantidade para o brinquedo: "); lerint( &(*a).v[posicao].qtd );
                         printf("\nQuantidade atualizada com sucesso!\n"); break;
+                default: printf("\nInsira um comando valido.\n"); break;
             }
         }
         else
@@ -205,7 +219,9 @@ void listarfiltro ( Testoque a )
         switch (op) 
         {
             case 1: 
-                printf("Insira o nome a ser buscado: "); lerstring( dado, TAMCATEGORIA );
+                do {
+                    printf("Insira o nome a ser buscado: "); lerstring( dado, TAMCATEGORIA );
+                } while ( ehvazio(dado) == 0 );
                 printf("\n");
                 for ( i = 0 ; i < a.qtd ; i++ )
                 {
@@ -224,7 +240,9 @@ void listarfiltro ( Testoque a )
                 pausartela();
                 break;
             case 2: 
-                printf("Insira a categoria a ser buscada: "); lerstring(dado, TAMCATEGORIA );
+                do {
+                    printf("Insira a categoria a ser buscada: "); lerstring(dado, TAMCATEGORIA );
+                } while ( ehvazio(dado) == 0 );
                 printf("\n");
                 for ( i = 0 ; i < a.qtd ; i++ )
                 {
@@ -242,6 +260,7 @@ void listarfiltro ( Testoque a )
                 if ( cont == 0 ) printf("\tNenhum brinquedo encontrado.\n\n");
                 pausartela();
                 break;
+            default: printf("\nInsira um comando valido.\n"); break;
         }
     }
     else { printf("\tNao ha nenhum brinquedo no estoque.\n\n"); pausartela(); }

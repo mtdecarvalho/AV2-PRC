@@ -6,5 +6,6 @@ void pausartela();
 void limpa();
 void lerint ( int * a );
 void lerstring ( char a[], int tam );
+int ehvazio ( char a[] );
 
 #endif

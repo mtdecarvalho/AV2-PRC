@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 void limpartela()
 {
@@ -45,4 +46,13 @@ void lerstring ( char a[], int tam )
     fgets(a, tam, stdin); 
     if (a[strlen(a)-1] == '\n') a[strlen(a)-1] = '\0';
     if ( strlen(a) == tam-1 ) limpa();
+}
+
+int ehvazio ( char a[] )
+{
+    int i, cont=0;
+    for ( i = 0 ; i < strlen(a) ; i++ )
+        if ( isspace(a[i]) ) cont++;
+    if ( cont == strlen(a) ) return 0;
+    else return 1;
 }
