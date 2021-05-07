@@ -1,3 +1,4 @@
 # AV2-PRC
 
-Completo.
+Repositório com o código fonte da AV2 de Programação em C.
+Exercícios separados em pastas.
